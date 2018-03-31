@@ -1,4 +1,3 @@
-console.log('hey there123');
 var urlsToCache = [
     '/images/7.png',
     '/images/1.png',
@@ -8,17 +7,21 @@ var urlsToCache = [
     '/images/5.png',
     '/images/6.png',
     '/',
-    '/src.js',
-    '/styles.css'
+    '/dist/bundle.js',
+    '/styles.scss'
 ];
-var cacheName= 'image-cache';
-self.addEventListener('install', function(event) {
-   console.log('service worker installing');
+var cacheName = 'image-cache';
+self.addEventListener('install', function (event) {
+    console.log('service worker installing');
     event.waitUntil(
-        caches.open(cacheName).then(function(cache) {
-            console.log('cache opened');
-           return cache.addAll(urlsToCache);
-        })
+        caches.open(cacheName)
+            .then(function (cache) {
+                console.log('cache opened');
+                return cache.addAll(urlsToCache);
+            })
+            .catch(function(error) {
+                console.error('error while setting up  ' + error);
+            })
     );
     //open a cache
     //add all the url to cache
@@ -28,12 +31,14 @@ self.addEventListener('fetch', function(event) {
     event.respondWith(
       caches.match(event.request)
           .then(function(response) {
-              debugger;
               console.log('hey there in cache match');
               if (response) {
                   return response
               }
               return fetch(event.request);
+          })
+          .catch(function(error) {
+              console.log('here is the error ' + error);
           })
     );
 
