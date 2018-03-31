@@ -1,0 +1,15 @@
+system-config.js*
+learn_app/**/*.js
+learn_app/**/*.map
+node_modules
+jspm_packages
+bower_components
+aot/*
+dist/*
+yarn.lock
+.vscode/*
+npm-debug.log
+typings/*
+.DS_Store
+.idea/
+
